@@ -1,343 +1,343 @@
-# 快速開始指南 - Android WebView + Login 測試專案
+# Quick Start Guide - Android WebView + Login Test Project
 
-## 🎯 專案狀態
+## 🎯 Project Status
 
-✅ **專案完成度**: 100%
-✅ **代碼就緒**: 所有功能代碼已完成
-✅ **測試就緒**: 15 個測試案例已完成
-📍 **專案位置**: `/Users/yinghaowang/Work/android-webview-login`
+✅ **Project Completion**: 100%
+✅ **Code Ready**: All feature code complete
+✅ **Tests Ready**: 15 test cases complete
+📍 **Project Location**: `/Users/yinghaowang/Work/android-webview-login`
 
 ---
 
-## 🚀 推薦方式：使用 Android Studio
+## 🚀 Recommended Method: Using Android Studio
 
-### 步驟 1: 開啟專案
+### Step 1: Open Project
 
 ```bash
-# 方法 1: 使用命令列開啟
+# Method 1: Open from command line
 open -a "Android Studio" /Users/yinghaowang/Work/android-webview-login
 
-# 方法 2: 在 Android Studio 中
-# File → Open → 選擇 /Users/yinghaowang/Work/android-webview-login
+# Method 2: In Android Studio
+# File → Open → Select /Users/yinghaowang/Work/android-webview-login
 ```
 
-### 步驟 2: 等待 Gradle 同步
+### Step 2: Wait for Gradle Sync
 
-- Android Studio 會自動開始 Gradle 同步
-- 首次同步需要 **5-10 分鐘**（下載依賴套件）
-- 觀察右下角的進度條
-- 等待顯示 "Gradle sync finished"
+- Android Studio will automatically start Gradle sync
+- First sync takes **5-10 minutes** (downloading dependencies)
+- Watch progress bar in bottom right
+- Wait for "Gradle sync finished" message
 
-### 步驟 3: 解決可能的問題
+### Step 3: Resolve Possible Issues
 
-如果出現錯誤：
+If errors appear:
 
-**問題：Missing SDK components**
+**Issue: Missing SDK components**
 ```
-解決：Android Studio 會自動提示安裝
-點擊 "Install missing SDK package(s)"
+Solution: Android Studio will auto-prompt
+Click "Install missing SDK package(s)"
 ```
 
-**問題：JDK 版本不符**
+**Issue: JDK version mismatch**
 ```
-解決：
+Solution:
 1. File → Project Structure
 2. SDK Location → JDK location
-3. 選擇 "Embedded JDK" 或 JDK 17
+3. Select "Embedded JDK" or JDK 17
 ```
 
-**問題：Build Tools 版本**
+**Issue: Build Tools version**
 ```
-解決：
+Solution:
 1. Tools → SDK Manager
-2. SDK Tools 標籤頁
-3. 勾選 "Android SDK Build-Tools 33.0.1"
-4. 點擊 "Apply"
+2. SDK Tools tab
+3. Check "Android SDK Build-Tools 33.0.1"
+4. Click "Apply"
 ```
 
-### 步驟 4: 建構專案
+### Step 4: Build Project
 
 ```
-方法 1: 使用選單
-Build → Make Project (或按 ⌘ + F9)
+Method 1: Use menu
+Build → Make Project (or press ⌘ + F9)
 
-方法 2: 使用工具列
-點擊工具列的 Hammer 圖示（Build）
+Method 2: Use toolbar
+Click Hammer icon (Build)
 
-預計時間：首次建構約 2-3 分鐘
+Expected time: First build ~2-3 minutes
 ```
 
-### 步驟 5: 執行應用程式
+### Step 5: Run Application
 
-#### 5.1 準備裝置
+#### 5.1 Prepare Device
 
-**選項 A: 使用模擬器**
+**Option A: Use Emulator**
 ```
 1. Tools → Device Manager
-2. 點擊 "Create Virtual Device"
-3. 選擇 Pixel 6 或其他裝置
-4. 選擇 API 34 (Android 14) 系統映像
-5. 點擊 "Finish"
-6. 啟動模擬器
+2. Click "Create Virtual Device"
+3. Select Pixel 6 or other device
+4. Select API 34 (Android 14) system image
+5. Click "Finish"
+6. Start emulator
 ```
 
-**選項 B: 使用實體裝置**
+**Option B: Use Physical Device**
 ```
-1. 在手機上啟用開發者選項和 USB 調試
-2. 連接 USB 線
-3. 允許 USB 調試授權
-```
-
-#### 5.2 執行應用
-
-```
-1. 確保裝置在裝置選擇器中顯示
-2. 點擊綠色三角形 Run 按鈕（或按 ⌃ + R）
-3. 等待應用安裝和啟動
+1. Enable Developer Options and USB Debug on phone
+2. Connect USB cable
+3. Allow USB Debug authorization
 ```
 
-### 步驟 6: 手動測試
+#### 5.2 Run App
 
-**登入測試**:
-1. 輸入測試帳號：`demo`
-2. 輸入密碼：`password123`
-3. 點擊「登入」
-4. 觀察載入動畫
-5. 確認跳轉到 WebView 畫面
+```
+1. Ensure device appears in device selector
+2. Click green triangle Run button (or press ⌃ + R)
+3. Wait for app to install and start
+```
 
-**WebView 測試**:
-1. 確認使用者名稱顯示為「使用者: demo」
-2. 在 URL 欄輸入 `google.com`
-3. 點擊「載入」按鈕
-4. 確認網頁正常載入
-5. 點擊「登出」返回登入畫面
+### Step 6: Manual Testing
+
+**Test Login**:
+1. Enter test account: `demo`
+2. Enter password: `password123`
+3. Click "Login"
+4. Watch loading animation
+5. Confirm jump to WebView screen
+
+**Test WebView**:
+1. Confirm username displays as "User: demo"
+2. Enter `google.com` in URL field
+3. Click "Load" button
+4. Confirm web page loads
+5. Click "Logout" to return to login screen
 
 ---
 
-## 🧪 執行自動化測試
+## 🧪 Run Automated Tests
 
-### 方法 1: 在 Android Studio 中執行
+### Method 1: Run in Android Studio
 
-#### 執行所有測試
+#### Run All Tests
 ```
-1. 在專案結構中找到 app/src/androidTest
-2. 右鍵點擊 androidTest 資料夾
-3. 選擇 "Run 'Tests in androidTest'"
-4. 等待測試完成（約 3-5 分鐘）
-```
-
-#### 執行特定測試
-```
-Login 測試:
-1. 打開 MainActivityTest.kt
-2. 右鍵點擊檔案
-3. 選擇 "Run 'MainActivityTest'"
-
-WebView 測試:
-1. 打開 WebViewActivityTest.kt
-2. 右鍵點擊檔案
-3. 選擇 "Run 'WebViewActivityTest'"
+1. Find app/src/androidTest in project structure
+2. Right-click androidTest folder
+3. Select "Run 'Tests in androidTest'"
+4. Wait for tests to complete (~3-5 minutes)
 ```
 
-#### 執行單一測試方法
+#### Run Specific Tests
 ```
-1. 在測試檔案中找到測試方法（@Test）
-2. 點擊方法左邊的綠色播放圖示
-3. 選擇 "Run 'testMethodName()'"
+Login tests:
+1. Open MainActivityTest.kt
+2. Right-click file
+3. Select "Run 'MainActivityTest'"
+
+WebView tests:
+1. Open WebViewActivityTest.kt
+2. Right-click file
+3. Select "Run 'WebViewActivityTest'"
 ```
 
-### 方法 2: 使用命令列（需先確保 Android Studio 建構成功）
+#### Run Single Test Method
+```
+1. Find test method (has @Test annotation)
+2. Click green play icon beside method name
+3. Select "Run 'testMethodName()'"
+```
+
+### Method 2: Use Command Line (After Android Studio builds successfully)
 
 ```bash
-# 設置環境
+# Set environment
 export JAVA_HOME="/Applications/Android Studio.app/Contents/jbr/Contents/Home"
 export ANDROID_HOME="$HOME/Library/Android/sdk"
 cd /Users/yinghaowang/Work/android-webview-login
 
-# 確保裝置已連接
+# Ensure device connected
 adb devices
 
-# 執行所有測試
+# Run all tests
 ./gradlew connectedAndroidTest
 
-# 查看測試報告
+# View test report
 open app/build/reports/androidTests/connected/index.html
 ```
 
 ---
 
-## 📊 測試案例清單
+## 📊 Test Case List
 
-### ✅ MainActivityTest (6 個測試)
+### ✅ MainActivityTest (6 Tests)
 
-| # | 測試方法 | 測試內容 | 預期結果 |
+| # | Test Method | Test Content | Expected Result |
 |---|---------|---------|---------|
-| 1 | testLoginScreenDisplayed | 驗證 UI 元素 | 所有元素正確顯示 |
-| 2 | testEmptyCredentials | 空白輸入 | 顯示錯誤訊息 |
-| 3 | testInvalidCredentials | 錯誤帳密 | 登入失敗保持在登入頁 |
-| 4 | testSuccessfulLogin | 正確登入 | 跳轉到 WebView 頁面 |
-| 5 | testLoginButtonDisabledDuringLogin | 載入狀態 | 按鈕禁用顯示進度 |
-| 6 | testDifferentValidUsers | 多使用者 | 3組帳號都能登入 |
+| 1 | testLoginScreenDisplayed | Verify UI elements | All elements display correctly |
+| 2 | testEmptyCredentials | Empty input | Show error message |
+| 3 | testInvalidCredentials | Wrong credentials | Login fails, stay on login page |
+| 4 | testSuccessfulLogin | Correct login | Jump to WebView page |
+| 5 | testLoginButtonDisabledDuringLogin | Loading state | Button disabled, show progress |
+| 6 | testDifferentValidUsers | Multiple users | All 3 accounts can login |
 
-### ✅ WebViewActivityTest (9 個測試)
+### ✅ WebViewActivityTest (9 Tests)
 
-| # | 測試方法 | 測試內容 | 預期結果 |
+| # | Test Method | Test Content | Expected Result |
 |---|---------|---------|---------|
-| 1 | testWebViewActivityDisplayed | 驗證 UI 元素 | 所有元素正確顯示 |
-| 2 | testLoadDifferentUrl | URL 載入 | 網址正確載入 |
-| 3 | testLoadUrlWithHttps | HTTPS 載入 | HTTPS 網址正常 |
-| 4 | testLogoutButton | 登出功能 | 正確返回登入頁 |
-| 5 | testWebViewLoadingProgress | 載入進度 | 進度條正常顯示 |
-| 6 | testEmptyUrlHandling | 空白 URL | 正確處理錯誤 |
-| 7 | testMultipleUrlLoads | 多次載入 | 連續載入無問題 |
-| 8 | testWebViewWithGoogleSearch | Google 測試 | 外部網站正常 |
-| 9 | testUserInfoPersistence | 資訊持久 | 使用者資訊不變 |
+| 1 | testWebViewActivityDisplayed | Verify UI elements | All elements display correctly |
+| 2 | testLoadDifferentUrl | URL loading | URL loads correctly |
+| 3 | testLoadUrlWithHttps | HTTPS loading | HTTPS URL loads normally |
+| 4 | testLogoutButton | Logout functionality | Correctly return to login page |
+| 5 | testWebViewLoadingProgress | Loading progress | Progress bar displays |
+| 6 | testEmptyUrlHandling | Empty URL | Correct error handling |
+| 7 | testMultipleUrlLoads | Multiple loads | Continuous loading works |
+| 8 | testWebViewWithGoogleSearch | Google test | External website loads normally |
+| 9 | testUserInfoPersistence | Info persistence | User info remains unchanged |
 
 ---
 
-## 🔍 測試執行注意事項
+## 🔍 Test Preparation Notes
 
-### 測試前準備
+### Pre-Test Preparation
 
-1. **關閉裝置動畫**（重要！）
+1. **Disable Device Animation** (Important!)
 ```
-裝置設定 → 開發者選項 → 將以下三項設為 "off":
+Device Settings → Developer Options → Set following to "off":
 - Window animation scale
 - Transition animation scale
 - Animator duration scale
 ```
 
-2. **確保網路連線**
+2. **Ensure Network Connection**
 ```
-WebView 測試需要載入外部網頁
-確保測試裝置有網路連線
-```
-
-3. **保持螢幕亮起**
-```
-測試期間不要讓裝置進入休眠
-建議插上電源並設定螢幕常亮
+WebView tests load external web pages
+Ensure device has internet connection
 ```
 
-### 查看測試結果
+3. **Keep Screen On**
+```
+Tests need screen on during execution
+Recommended: Plug in power and set screen always on
+```
 
-**在 Android Studio 中**:
-- 測試完成後，Run 視窗會顯示結果
-- 綠色 ✓ 表示通過
-- 紅色 ✗ 表示失敗
-- 點擊失敗的測試可查看詳細錯誤
+### View Test Results
 
-**查看 HTML 報告**:
+**In Android Studio**:
+- Tests complete, Run window shows results
+- Green ✓ = passed
+- Red ✗ = failed
+- Click failed test to see error details
+
+**View HTML Report**:
 ```bash
-# 測試完成後自動生成
+# Auto-generated after tests complete
 open app/build/reports/androidTests/connected/index.html
 ```
 
 ---
 
-## 🎓 測試帳號資訊
+## 🎓 Test Accounts
 
-| 使用者名稱 | 密碼 | 用途 |
+| Username | Password | Purpose |
 |-----------|------|------|
-| demo | password123 | 主要測試帳號 |
-| test | test123 | 備用測試帳號 |
-| admin | admin123 | 管理員測試帳號 |
+| demo | password123 | Main test account |
+| test | test123 | Backup account |
+| admin | admin123 | Admin account |
 
 ---
 
-## 🐛 常見問題
+## 🐛 Common Questions
 
-### Q1: Gradle 同步失敗怎麼辦？
+### Q1: Gradle sync failed, what to do?
 
-**解決方案**:
+**Solution**:
 ```
 1. File → Invalidate Caches / Restart
-2. 選擇 "Invalidate and Restart"
-3. 等待 Android Studio 重新啟動
-4. 讓 Gradle 重新同步
+2. Select "Invalidate and Restart"
+3. Wait for Android Studio to restart
+4. Let Gradle resync
 ```
 
-### Q2: 測試一直失敗？
+### Q2: Tests always fail?
 
-**檢查項目**:
-- ✅ 裝置動畫是否已關閉
-- ✅ 網路連線是否正常
-- ✅ 裝置是否保持亮屏
-- ✅ 是否有其他應用佔用螢幕
+**Check items**:
+- ✅ Device animation disabled
+- ✅ Network connection normal
+- ✅ Device screen on
+- ✅ No other apps using screen
 
-### Q3: 無法連接裝置？
+### Q3: Device not found?
 
-**實體裝置**:
+**Physical device**:
 ```
-1. 確認 USB 線連接正常
-2. 確認已啟用 USB 調試
-3. 重新授權 USB 調試
-4. 嘗試重新插拔 USB
+1. Confirm USB cable connected properly
+2. Confirm USB Debug enabled
+3. Reauthorize USB Debug
+4. Try reconnecting USB
 ```
 
-**模擬器**:
+**Emulator**:
 ```
 1. Tools → Device Manager
-2. 確認模擬器狀態為 "Running"
-3. 嘗試重新啟動模擬器
-4. 確認 HAXM/Hyper-V 已啟用
+2. Check emulator status is "Running"
+3. Try restarting emulator
+4. Confirm HAXM/Hyper-V enabled
 ```
 
-### Q4: 建構太慢？
+### Q4: Build too slow?
 
-**優化建議**:
+**Optimization tips**:
 ```
-1. 增加 Gradle 記憶體:
-   編輯 gradle.properties:
+1. Increase Gradle memory:
+   Edit gradle.properties:
    org.gradle.jvmargs=-Xmx4096m
 
-2. 啟用 Gradle daemon:
+2. Enable Gradle daemon:
    org.gradle.daemon=true
 
-3. 啟用 parallel build:
+3. Enable parallel build:
    org.gradle.parallel=true
 ```
 
-### Q5: 測試執行太慢？
+### Q5: Tests run too slow?
 
-**優化建議**:
-- 使用較新的模擬器（API 30+）
-- 使用 x86_64 系統映像（比 ARM 快）
-- 增加模擬器的 RAM 和 CPU 核心數
-- 使用實體裝置測試（通常更快）
+**Optimization tips**:
+- Use newer emulator (API 30+)
+- Use x86_64 system image (faster than ARM)
+- Increase emulator RAM and CPU cores
+- Use physical device (usually faster)
 
 ---
 
-## 📖 延伸學習
+## 📖 Extended Learning
 
-### 修改測試
+### Modify Tests
 
-**添加新測試案例**:
+**Add new test case**:
 ```kotlin
 @Test
 fun testNewFeature() {
-    // 1. 操作 UI
+    // 1. Operate UI
     onView(withId(R.id.myButton))
         .perform(click())
 
-    // 2. 驗證結果
+    // 2. Verify result
     onView(withId(R.id.myText))
         .check(matches(withText("Expected")))
 }
 ```
 
-**添加新測試帳號**:
+**Add new test account**:
 ```kotlin
-// 編輯 LoginService.kt
+// Edit LoginService.kt
 private val validUsers = mapOf(
     "demo" to "password123",
     "test" to "test123",
     "admin" to "admin123",
-    "newuser" to "newpass"  // 添加新帳號
+    "newuser" to "newpass"  // Add new account
 )
 ```
 
-### 相關資源
+### Related Resources
 
 - [Android Testing Guide](https://developer.android.com/training/testing)
 - [Espresso Documentation](https://developer.android.com/training/testing/espresso)
@@ -346,40 +346,40 @@ private val validUsers = mapOf(
 
 ---
 
-## ✅ 檢查清單
+## ✅ Checklist
 
-建構前：
-- [ ] Android Studio 已安裝
-- [ ] 專案已在 Android Studio 中開啟
-- [ ] Gradle 同步已完成
-- [ ] JDK 設定正確
+Before Build:
+- [ ] Android Studio installed
+- [ ] Project opened in Android Studio
+- [ ] Gradle sync completed
+- [ ] JDK settings correct
 
-執行前：
-- [ ] 裝置/模擬器已連接
-- [ ] 裝置動畫已關閉
-- [ ] 網路連線正常
-- [ ] 裝置保持亮屏
+Before Run:
+- [ ] Device/emulator connected
+- [ ] Device animation disabled
+- [ ] Network connection normal
+- [ ] Screen on
 
-測試前：
-- [ ] 應用已成功建構
-- [ ] 應用可正常啟動
-- [ ] 手動測試登入功能正常
-- [ ] 準備執行自動化測試
-
----
-
-## 📞 需要協助？
-
-如果遇到問題：
-
-1. **檢查建構指南**: 詳見 `BUILD_TEST_GUIDE.md`
-2. **檢查專案說明**: 詳見 `README.md`
-3. **查看錯誤日誌**: Android Studio → Build → Build Output
-4. **清理專案**: Build → Clean Project → Rebuild Project
+Before Test:
+- [ ] App built successfully
+- [ ] App starts normally
+- [ ] Manual login test works
+- [ ] Ready for automated tests
 
 ---
 
-**專案建立**: 2025-11-07
-**最後更新**: 2025-11-07
-**版本**: 1.0.0
-**狀態**: ✅ 就緒可用
+## 📞 Need Help?
+
+If problems occur:
+
+1. **Check build guide**: See `BUILD_TEST_GUIDE.md`
+2. **Check project description**: See `README.md`
+3. **View error log**: Android Studio → Build → Build Output
+4. **Clean project**: Build → Clean Project → Rebuild Project
+
+---
+
+**Project Created**: 2025-11-07
+**Last Updated**: 2025-11-07
+**Version**: 1.0.0
+**Status**: ✅ Ready to Use

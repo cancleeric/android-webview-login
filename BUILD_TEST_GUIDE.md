@@ -1,268 +1,267 @@
-# Android WebView + Login 測試專案 - 建構與測試指南
+# Android WebView + Login Test Project - Build and Test Guide
 
-## 📋 專案概況
+## 📋 Project Overview
 
-**專案位置**: `/Users/yinghaowang/Work/android-webview-login`
-**建立日期**: 2025-11-07
-**狀態**: ✅ 專案結構完成，代碼就緒
+**Project Location**: `/Users/yinghaowang/Work/android-webview-login`
+**Created**: 2025-11-07
+**Status**: ✅ Project structure complete, code ready
 
-## 🎯 專案內容
+## 🎯 Project Contents
 
-### 功能模組
+### Function Modules
 
-1. **Login 登入系統**
-   - 檔案: `MainActivity.kt`, `MainViewModel.kt`, `LoginService.kt`
-   - 功能: Mock 登入驗證、MVVM 架構
-   - 測試帳號:
+1. **Login System**
+   - Files: `MainActivity.kt`, `MainViewModel.kt`, `LoginService.kt`
+   - Features: Mock login verification, MVVM architecture
+   - Test Accounts:
      - demo / password123
      - test / test123
      - admin / admin123
 
-2. **WebView 瀏覽器**
-   - 檔案: `WebViewActivity.kt`
-   - 功能: 網頁載入、URL 輸入、使用者資訊顯示
+2. **WebView Browser**
+   - File: `WebViewActivity.kt`
+   - Features: Web page loading, URL input, user info display
 
-3. **測試套件**
-   - `MainActivityTest.kt` - 6 個登入測試案例
-   - `WebViewActivityTest.kt` - 9 個 WebView 測試案例
+3. **Test Suite**
+   - `MainActivityTest.kt` - 6 login test cases
+   - `WebViewActivityTest.kt` - 9 WebView test cases
 
-## 🚀 建構與測試步驟
+## 🚀 Build and Test Steps
 
-### 方法 1: 使用 Android Studio（推薦）
+### Method 1: Using Android Studio (Recommended)
 
-#### 1. 開啟專案
+#### 1. Open Project
 ```bash
-# 在 Finder 中導航到
+# Navigate in Finder to
 /Users/yinghaowang/Work/android-webview-login
 
-# 或使用命令列
+# Or use command line
 open -a "Android Studio" /Users/yinghaowang/Work/android-webview-login
 ```
 
-#### 2. 等待 Gradle 同步
-- Android Studio 會自動開始 Gradle 同步
-- 等待進度條完成（首次可能需要 5-10 分鐘）
+#### 2. Wait for Gradle Sync
+- Android Studio will automatically start Gradle sync
+- Wait for progress bar to complete (first time may take 5-10 minutes)
 
-#### 3. 建構專案
+#### 3. Build Project
 ```
 Menu → Build → Make Project
-或按 ⌘ + F9
+Or press ⌘ + F9
 ```
 
-#### 4. 執行應用程式
+#### 4. Run Application
 ```
-點擊工具列的 Run 按鈕（綠色三角形）
-或按 ⌃ + R
-```
-
-#### 5. 執行測試
-
-**執行所有測試**:
-```
-右鍵點擊 app/src/androidTest → Run 'Tests in androidTest'
+Click Run button in toolbar (green triangle)
+Or press ⌃ + R
 ```
 
-**執行特定測試**:
-```
-# Login 測試
-右鍵點擊 MainActivityTest.kt → Run 'MainActivityTest'
+#### 5. Run Tests
 
-# WebView 測試
-右鍵點擊 WebViewActivityTest.kt → Run 'WebViewActivityTest'
+**Run All Tests**:
+```
+Right-click app/src/androidTest → Run 'Tests in androidTest'
 ```
 
-### 方法 2: 使用命令列
+**Run Specific Tests**:
+```
+# Login tests
+Right-click MainActivityTest.kt → Run 'MainActivityTest'
 
-#### 前置條件
+# WebView tests
+Right-click WebViewActivityTest.kt → Run 'WebViewActivityTest'
+```
+
+### Method 2: Using Command Line
+
+#### Prerequisites
 ```bash
-# 設置環境變數
+# Set environment variables
 export JAVA_HOME="/Applications/Android Studio.app/Contents/jbr/Contents/Home"
 export ANDROID_HOME="$HOME/Library/Android/sdk"
 export PATH="$ANDROID_HOME/platform-tools:$ANDROID_HOME/emulator:$PATH"
 ```
 
-#### 建構應用程式
+#### Build Application
 ```bash
 cd /Users/yinghaowang/Work/android-webview-login
 
-# 清理並建構
+# Clean and build
 ./gradlew clean assembleDebug
 
-# 查看建構結果
+# View build results
 ls -lh app/build/outputs/apk/debug/
 ```
 
-#### 安裝到裝置
+#### Install to Device
 ```bash
-# 確保裝置已連接或模擬器已啟動
+# Ensure device is connected or emulator is running
 adb devices
 
-# 安裝 APK
+# Install APK
 adb install app/build/outputs/apk/debug/app-debug.apk
 ```
 
-#### 執行測試（需要連接裝置或模擬器）
+#### Run Tests (requires connected device or emulator)
 ```bash
-# 執行所有 UI 測試
+# Run all UI tests
 ./gradlew connectedAndroidTest
 
-# 執行特定測試類別
+# Run specific test class
 ./gradlew connectedAndroidTest -Pandroid.testInstrumentationRunnerArguments.class=com.example.webviewlogin.MainActivityTest
 
-# 查看測試報告
+# View test report
 open app/build/reports/androidTests/connected/index.html
 ```
 
-## 🔧 疑難排解
+## 🔧 Troubleshooting
 
-### 問題 1: Gradle 同步失敗
+### Issue 1: Gradle Sync Failed
 
-**解決方案**:
+**Solution**:
 ```bash
 cd /Users/yinghaowang/Work/android-webview-login
 ./gradlew clean
 rm -rf .gradle
-# 然後在 Android Studio 重新同步
+# Then resync in Android Studio
 ```
 
-### 問題 2: Build Tools 版本不符
+### Issue 2: Build Tools Version Mismatch
 
-**解決方案**:
-在 Android Studio 中：
+**Solution**:
+In Android Studio:
 1. Tools → SDK Manager
-2. SDK Tools 標籤
-3. 勾選並安裝 "Android SDK Build-Tools 33.0.1"
+2. SDK Tools tab
+3. Check and install "Android SDK Build-Tools 33.0.1"
 
-### 問題 3: 測試裝置動畫影響測試
+### Issue 3: Device Animation Affecting Tests
 
-**解決方案**:
-在測試裝置上關閉動畫：
+**Solution**:
+On test device, disable animations:
 1. Settings → Developer Options
-2. 將以下三項設為 "Animation off":
+2. Set following three to "Animation off":
    - Window animation scale
    - Transition animation scale
    - Animator duration scale
 
-### 問題 4: JDK 版本問題
+### Issue 4: JDK Version Issue
 
-**解決方案**:
-在 Android Studio 中：
+**Solution**:
+In Android Studio:
 1. File → Project Structure
 2. SDK Location → JDK location
-3. 選擇 "Embedded JDK" 或 JDK 17/21
+3. Select "Embedded JDK" or JDK 17/21
 
-## 📊 測試案例清單
+## 📊 Test Case List
 
-### MainActivityTest (Login 測試)
+### MainActivityTest (Login Tests)
 
-| 測試名稱 | 描述 | 預期結果 |
+| Test Name | Description | Expected Result |
 |---------|------|---------|
-| testLoginScreenDisplayed | 驗證登入畫面元素 | 所有 UI 元素顯示正確 |
-| testEmptyCredentials | 測試空白帳號密碼 | 顯示錯誤訊息 |
-| testInvalidCredentials | 測試錯誤帳號密碼 | 登入失敗 |
-| testSuccessfulLogin | 測試成功登入 | 跳轉到 WebView 畫面 |
-| testLoginButtonDisabledDuringLogin | 測試載入狀態 | 按鈕禁用，進度條顯示 |
-| testDifferentValidUsers | 測試多組使用者 | 所有有效帳號都能登入 |
+| testLoginScreenDisplayed | Verify login screen elements | All UI elements display correctly |
+| testEmptyCredentials | Test empty username password | Show error message |
+| testInvalidCredentials | Test wrong username password | Login fails |
+| testSuccessfulLogin | Test successful login | Jump to WebView screen |
+| testLoginButtonDisabledDuringLogin | Test loading state | Button disabled, progress shows |
+| testDifferentValidUsers | Test multiple users | All valid accounts can login |
 
-### WebViewActivityTest (WebView 測試)
+### WebViewActivityTest (WebView Tests)
 
-| 測試名稱 | 描述 | 預期結果 |
+| Test Name | Description | Expected Result |
 |---------|------|---------|
-| testWebViewActivityDisplayed | 驗證 WebView 畫面元素 | 所有 UI 元素顯示正確 |
-| testLoadDifferentUrl | 測試載入不同網址 | URL 正確載入和顯示 |
-| testLoadUrlWithHttps | 測試 HTTPS 網址 | 網頁正確載入 |
-| testLogoutButton | 測試登出功能 | Activity 正確結束 |
-| testWebViewLoadingProgress | 測試載入進度 | 進度條正常顯示 |
-| testEmptyUrlHandling | 測試空白 URL | 正確處理錯誤 |
-| testMultipleUrlLoads | 測試多次載入 | 所有網址都能載入 |
-| testWebViewWithGoogleSearch | 測試載入 Google | 成功載入外部網站 |
-| testUserInfoPersistence | 測試使用者資訊持久性 | 資訊保持不變 |
+| testWebViewActivityDisplayed | Verify WebView screen elements | All UI elements display correctly |
+| testLoadDifferentUrl | Test loading different URLs | URL correctly loaded and displayed |
+| testLoadUrlWithHttps | Test HTTPS URL | Web page correctly loaded |
+| testLogoutButton | Test logout functionality | Activity correctly ends |
+| testWebViewLoadingProgress | Test loading progress | Progress bar displays normally |
+| testEmptyUrlHandling | Test empty URL | Error correctly handled |
+| testMultipleUrlLoads | Test multiple loads | All URLs load successfully |
+| testWebViewWithGoogleSearch | Test Google search loading | External website loads successfully |
+| testUserInfoPersistence | Test user info persistence | Info remains unchanged |
 
-## 📁 重要檔案位置
+## 📁 Important File Locations
 
 ```
-專案根目錄: /Users/yinghaowang/Work/android-webview-login/
+Project root: /Users/yinghaowang/Work/android-webview-login/
 
-主要代碼:
+Main code:
 ├── app/src/main/java/com/example/webviewlogin/
-│   ├── MainActivity.kt                 # 登入畫面
-│   ├── MainViewModel.kt                # 登入邏輯
-│   ├── WebViewActivity.kt              # WebView 畫面
+│   ├── MainActivity.kt                 # Login screen
+│   ├── MainViewModel.kt                # Login logic
+│   ├── WebViewActivity.kt              # WebView screen
 │   ├── model/
-│   │   ├── User.kt                     # 使用者資料
-│   │   └── LoginResult.kt              # 登入結果
+│   │   ├── User.kt                     # User data
+│   │   └── LoginResult.kt              # Login result
 │   └── service/
-│       └── LoginService.kt             # Mock 登入服務
+│       └── LoginService.kt             # Mock login service
 
-測試代碼:
+Test code:
 ├── app/src/androidTest/java/com/example/webviewlogin/
-│   ├── MainActivityTest.kt             # Login 測試
-│   └── WebViewActivityTest.kt          # WebView 測試
+│   ├── MainActivityTest.kt             # Login tests
+│   └── WebViewActivityTest.kt          # WebView tests
 
-資源檔案:
+Resource files:
 ├── app/src/main/res/
 │   ├── layout/
-│   │   ├── activity_main.xml           # 登入畫面佈局
-│   │   └── activity_webview.xml        # WebView 畫面佈局
+│   │   ├── activity_main.xml           # Login screen layout
+│   │   └── activity_webview.xml        # WebView screen layout
 │   └── values/
-│       ├── strings.xml                 # 字串資源
-│       ├── colors.xml                  # 顏色資源
-│       └── themes.xml                  # 主題
+│       ├── strings.xml                 # String resources
+│       ├── colors.xml                  # Color resources
+│       └── themes.xml                  # Theme
 
-建構輸出:
+Build output:
 ├── app/build/outputs/apk/debug/
 │   └── app-debug.apk                   # Debug APK
 └── app/build/reports/
-    └── androidTests/connected/         # 測試報告
+    └── androidTests/connected/         # Test reports
 ```
 
-## 🎬 快速測試步驟
+## 🎬 Quick Test Steps
 
-### 手動測試流程
+### Manual Test Flow
 
-1. **啟動應用程式**
-   - 在模擬器或實體裝置上安裝並啟動 App
+1. **Start Application**
+   - Install and start App on emulator or physical device
 
-2. **測試登入**
-   - 輸入測試帳號: `demo` / `password123`
-   - 點擊「登入」按鈕
-   - 觀察載入動畫和結果
+2. **Test Login**
+   - Enter test account: `demo` / `password123`
+   - Click "Login" button
+   - Observe loading animation and result
 
-3. **測試 WebView**
-   - 登入成功後自動跳轉
-   - 確認使用者名稱顯示正確
-   - 在 URL 欄輸入 `google.com`
-   - 點擊「載入」按鈕
-   - 確認網頁載入正常
+3. **Test WebView**
+   - Confirm username displays correctly
+   - Enter `google.com` in URL field
+   - Click "Load" button
+   - Confirm web page loads normally
 
-4. **測試登出**
-   - 點擊「登出」按鈕
-   - 確認返回登入畫面
+4. **Test Logout**
+   - Click "Logout" button
+   - Confirm return to login screen
 
-### 自動化測試流程
+### Automated Test Flow
 
-1. **在 Android Studio 中**
+1. **In Android Studio**
    ```
-   右鍵點擊 app/src/androidTest
+   Right-click app/src/androidTest
    → Run 'Tests in androidTest'
    ```
 
-2. **觀察測試執行**
-   - 測試會自動執行所有案例
-   - 觀察 Run 視窗的測試進度
+2. **Observe Test Execution**
+   - Tests run automatically through all cases
+   - Watch test progress in Run window
 
-3. **查看測試報告**
-   - 測試完成後自動顯示結果
-   - 綠色 ✓ 表示通過
-   - 紅色 ✗ 表示失敗
+3. **View Test Report**
+   - Results display automatically after tests complete
+   - Green ✓ means passed
+   - Red ✗ means failed
 
-## 💡 開發建議
+## 💡 Development Suggestions
 
-### 添加新測試
+### Add New Test
 
-1. 在 `app/src/androidTest/java/com/example/webviewlogin/` 建立新測試檔
-2. 繼承測試類別並添加 `@Test` 註解
-3. 使用 Espresso API 編寫測試邏輯
+1. Create new test file in `app/src/androidTest/java/com/example/webviewlogin/`
+2. Extend test class and add `@Test` annotation
+3. Write test logic using Espresso API
 
 ```kotlin
 @Test
@@ -273,35 +272,35 @@ fun testNewFeature() {
 }
 ```
 
-### 修改測試帳號
+### Modify Test Accounts
 
-編輯 `LoginService.kt`:
+Edit `LoginService.kt`:
 ```kotlin
 private val validUsers = mapOf(
-    "newuser" to "newpassword"  // 添加新帳號
+    "newuser" to "newpassword"  // Add new account
 )
 ```
 
-### 調整 UI
+### Adjust UI
 
-修改 layout XML 檔案:
+Modify layout XML files:
 - `app/src/main/res/layout/activity_main.xml`
 - `app/src/main/res/layout/activity_webview.xml`
 
-## 📞 技術支援
+## 📞 Technical Support
 
-### 常見問題
+### Common Questions
 
-**Q: 測試一直失敗怎麼辦？**
-A: 確保關閉裝置動畫，並確認網路連線正常
+**Q: Tests always fail, what should I do?**
+A: Ensure device animations are disabled and network connection is normal
 
-**Q: 無法建構專案？**
-A: 嘗試 File → Invalidate Caches / Restart
+**Q: Unable to build project?**
+A: Try File → Invalidate Caches / Restart
 
-**Q: Gradle 下載太慢？**
-A: 可以設置 Gradle mirror 加速下載
+**Q: Gradle download too slow?**
+A: Can set Gradle mirror to speed up downloads
 
-### 有用的連結
+### Useful Links
 
 - [Android Testing Guide](https://developer.android.com/training/testing)
 - [Espresso Documentation](https://developer.android.com/training/testing/espresso)
@@ -309,6 +308,6 @@ A: 可以設置 Gradle mirror 加速下載
 
 ---
 
-**專案建立者**: Claude Code
-**最後更新**: 2025-11-07
-**版本**: 1.0.0
+**Project Creator**: Claude Code
+**Last Updated**: 2025-11-07
+**Version**: 1.0.0

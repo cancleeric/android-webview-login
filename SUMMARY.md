@@ -1,216 +1,270 @@
-# Android WebView + Login 測試專案 - 最終總結
+# Android WebView + Login Test Project - Final Summary
 
-## 📋 專案狀態
+## 📋 Project Status
 
-**專案位置**: `/Users/yinghaowang/Work/android-webview-login`
-**完成度**: ✅ 100% (代碼完成)
-**建構狀態**: ⚠️ 命令列環境有限制
-**測試就緒**: ✅ 15 個測試案例完成
+**Project Location**: `/Users/yinghaowang/Work/android-webview-login`
+**Completion**: ✅ 100% (Code complete)
+**Build Status**: ✅ Command line environment ready (Using JDK 17)
+**Test Status**: ✅ **15/15 All tests passed (100%)**
+**Last Test**: 2025-11-07
 
 ---
 
-## ✅ 已完成項目
+## ✅ Completed Items
 
-### 1. 完整功能代碼
-- ✅ Login 系統 (MainActivity + ViewModel + Service)
-- ✅ WebView 瀏覽器 (WebViewActivity)
-- ✅ Mock 登入服務 (3 組測試帳號)
+### 1. Complete Feature Code
+- ✅ Login System (MainActivity + ViewModel + Service)
+- ✅ WebView Browser (WebViewActivity)
+- ✅ Mock Login Service (3 test accounts)
 - ✅ Material Design UI
-- ✅ MVVM 架構
+- ✅ MVVM Architecture
 
-### 2. 完整測試套件
-- ✅ MainActivityTest (6 個登入測試)
-- ✅ WebViewActivityTest (9 個 WebView 測試)
-- ✅ Espresso UI 自動化測試框架
+### 2. Complete Test Suite
+- ✅ MainActivityTest (6 login tests)
+- ✅ WebViewActivityTest (9 WebView tests)
+- ✅ Espresso UI automated test framework
 
-### 3. 專案文件
-- ✅ README.md - 完整專案說明
-- ✅ QUICK_START.md - 快速開始指南
-- ✅ BUILD_TEST_GUIDE.md - 建構測試詳細指南
-- ✅ CLI_TEST_GUIDE.md - 命令列執行指南
-- ✅ SUMMARY.md - 本總結文件
+### 3. Project Documentation
+- ✅ README.md - Complete project description
+- ✅ QUICK_START.md - Quick start guide
+- ✅ BUILD_TEST_GUIDE.md - Build and test detailed guide
+- ✅ CLI_TEST_GUIDE.md - Command line execution guide
+- ✅ SUMMARY.md - This summary document
 
-### 4. 輔助工具
-- ✅ run_tests.sh - 自動化測試腳本
-- ✅ Gradle 建構系統
-- ✅ Git 忽略檔案
-- ✅ ProGuard 規則
+### 4. Helper Tools
+- ✅ run_tests.sh - Automated test script
+- ✅ Gradle build system
+- ✅ Git ignore file
+- ✅ ProGuard rules
 
 ---
 
-## ⚠️ 當前限制
+## ✅ Resolved Issues
 
-### 命令列建構問題
+### 1. Command Line Build Issue ✅ Resolved
 
-在命令列環境遇到 **JDK 21 與 Android Gradle Plugin 的相容性問題**：
-
+**Original Issue**: JDK 21 and Android Gradle Plugin compatibility issue
 ```
 Error: Failed to transform core-for-system-modules.jar
-執行 jlink 失敗
+jlink execution failed
 ```
 
-**原因**:
-- Android Studio 內建 JDK 21
-- Android Gradle Plugin 8.2 在命令列使用 jlink 轉換時失敗
-- 這是已知的 Gradle + JDK 21 相容性問題
+**Solution**: ✅ **Install and use JDK 17**
+```bash
+brew install openjdk@17
+export JAVA_HOME="/opt/homebrew/opt/openjdk@17"
+```
 
-**嘗試的解決方案**:
-- ❌ 降低 compileSdk 到 33 → 依賴庫需要 SDK 34
-- ❌ 降低 Java 版本到 11 → 仍然失敗
-- ❌ 降級依賴庫 → JDK 問題persist
+### 2. API 36 Emulator Test Failure ✅ Resolved
+
+**Original Issue**: API 36 (Android 16 Beta) does not support Espresso test framework
+```
+java.lang.NoSuchMethodException: android.hardware.input.InputManager.getInstance
+```
+
+**Solution**: ✅ **Use API 33 emulator**
+- Create Pixel 6 API 33 emulator in Android Studio Device Manager
+- All tests execute successfully
+
+### 3. WebView URL Verification Failure ✅ Resolved
+
+**Original Issue**: 2 tests failed (testLoadDifferentUrl, testMultipleUrlLoads)
+- Reason: WebView performs URL redirects during loading
+- Example: `example.com` → `https://www.example.com/`
+
+**Solution**: ✅ **Improve test logic**
+- Increase wait time (5s for single, 4s for multiple)
+- Use `containsString()` matcher instead of exact matching
+- Final Result: **15/15 All tests passed**
 
 ---
 
-## ✅ 推薦解決方案
+## 🎯 Test Execution Results
 
-### 方案 1: 使用 Android Studio（強烈推薦）⭐
+### Final Test Report (2025-11-07)
 
-這是**最簡單且最可靠**的方式：
+| Item | Result |
+|------|------|
+| **Total Tests** | 15 |
+| **Passed** | 15 ✅ (100%) |
+| **Failed** | 0 |
+| **Execution Time** | 1 minute 12 seconds |
+| **Emulator** | Pixel 6 API 33 |
+| **Build Tool** | JDK 17 |
+
+### Test Details
+
+**MainActivityTest** (6/6 Passed):
+- ✅ testLoginScreenDisplayed
+- ✅ testEmptyCredentials
+- ✅ testInvalidCredentials
+- ✅ testSuccessfulLogin
+- ✅ testLoginButtonDisabledDuringLogin
+- ✅ testDifferentValidUsers
+
+**WebViewActivityTest** (9/9 Passed):
+- ✅ testWebViewActivityDisplayed
+- ✅ testLoadDifferentUrl (Corrected)
+- ✅ testLoadUrlWithHttps
+- ✅ testLogoutButton
+- ✅ testWebViewLoadingProgress
+- ✅ testEmptyUrlHandling
+- ✅ testMultipleUrlLoads (Corrected)
+- ✅ testWebViewWithGoogleSearch
+- ✅ testUserInfoPersistence
+
+---
+
+## 📝 Complete Solutions
+
+### Solution 1: Using Android Studio (Highly Recommended) ⭐
+
+This is the **simplest and most reliable** way:
 
 ```bash
-# 開啟專案
+# Open project
 open -a "Android Studio" /Users/yinghaowang/Work/android-webview-login
 ```
 
-**步驟**：
-1. 等待 Gradle 同步（5-10 分鐘）
+**Steps**:
+1. Wait for Gradle sync (5-10 minutes)
 2. Build → Make Project (⌘ + F9)
-3. 連接裝置/模擬器
+3. Connect device/emulator
 4. Run → Run 'app' (⌃ + R)
-5. 右鍵 androidTest → Run 'Tests in androidTest'
+5. Right-click androidTest → Run 'Tests in androidTest'
 
-**優點**：
-- ✅ 自動處理所有相容性問題
-- ✅ 圖形化界面易於使用
-- ✅ 完整的除錯工具
-- ✅ 即時測試結果顯示
-- ✅ 測試報告自動產生
+**Advantages**:
+- ✅ Automatically handles all compatibility issues
+- ✅ GUI easy to use
+- ✅ Complete debugging tools
+- ✅ Real-time test result display
+- ✅ Test report automatically generated
 
 ---
 
-### 方案 2: 安裝 JDK 17 + 命令列
+### Solution 2: Install JDK 17 + Command Line
 
-如果必須使用命令列：
+If you must use command line:
 
-#### 2.1 安裝 JDK 17
+#### 2.1 Install JDK 17
 ```bash
-# 安裝 JDK 17
+# Install JDK 17
 brew install openjdk@17
 
-# 建立符號連結
+# Create symbolic link
 sudo ln -sfn /opt/homebrew/opt/openjdk@17/libexec/openjdk.jdk \
   /Library/Java/JavaVirtualMachines/openjdk-17.jdk
 ```
 
-#### 2.2 設置環境
+#### 2.2 Set Up Environment
 ```bash
-# 設置環境變數
+# Set environment variables
 export JAVA_HOME="/Library/Java/JavaVirtualMachines/openjdk-17.jdk/Contents/Home"
 export ANDROID_HOME="$HOME/Library/Android/sdk"
 export PATH="$ANDROID_HOME/platform-tools:$PATH"
 
-# 驗證
+# Verify
 java -version
 ```
 
-#### 2.3 建構與測試
+#### 2.3 Build and Test
 ```bash
 cd /Users/yinghaowang/Work/android-webview-login
 
-# 建構
+# Build
 ./gradlew clean assembleDebug
 
-# 執行測試（需要裝置）
+# Run tests (requires device)
 ./gradlew connectedAndroidTest
 
-# 查看報告
+# View report
 open app/build/reports/androidTests/connected/index.html
 ```
 
 ---
 
-### 方案 3: 使用自動化腳本
+### Solution 3: Using Automated Script
 
-我們提供了自動化測試腳本：
+We provide an automated test script:
 
 ```bash
 cd /Users/yinghaowang/Work/android-webview-login
 
-# 執行測試腳本
+# Run test script
 ./run_tests.sh
 ```
 
-腳本功能：
-- ✅ 自動檢測 Java 環境
-- ✅ 檢查 Android SDK
-- ✅ 驗證裝置連接
-- ✅ 建構專案（可選）
-- ✅ 執行測試
-- ✅ 產生報告
+Script features:
+- ✅ Auto detect Java environment
+- ✅ Check Android SDK
+- ✅ Verify device connection
+- ✅ Build project (optional)
+- ✅ Execute tests
+- ✅ Generate reports
 
 ---
 
-## 🎯 快速開始（推薦流程）
+## 🎯 Quick Start (Recommended Process)
 
-### 步驟 1: 使用 Android Studio 建構
+### Step 1: Build with Android Studio
 
 ```bash
-# 開啟專案
+# Open project
 open -a "Android Studio" /Users/yinghaowang/Work/android-webview-login
 
-# 在 Android Studio 中：
-# 1. 等待 Gradle 同步
+# In Android Studio:
+# 1. Wait for Gradle sync
 # 2. Build → Make Project
-# 3. 確認建構成功
+# 3. Confirm build successful
 ```
 
-### 步驟 2: 執行測試
+### Step 2: Run Tests
 
-**選項 A: 在 Android Studio 中執行**
+**Option A: Run in Android Studio**
 ```
-右鍵 app/src/androidTest → Run 'Tests in androidTest'
+Right-click app/src/androidTest → Run 'Tests in androidTest'
 ```
 
-**選項 B: 使用命令列執行**
+**Option B: Run with command line**
 ```bash
 cd /Users/yinghaowang/Work/android-webview-login
 ./run_tests.sh
 ```
 
-### 步驟 3: 查看結果
+### Step 3: View Results
 
-測試報告位置：
+Test report location:
 ```
 app/build/reports/androidTests/connected/index.html
 ```
 
 ---
 
-## 📱 測試準備
+## 📱 Test Preparation
 
-### 裝置要求
+### Device Requirements
 
-**選項 1: Android 模擬器**
-- API Level 24+ (推薦 33 或 34)
-- x86_64 系統映像
-- 至少 2GB RAM
+**Option 1: Android Emulator**
+- API Level 24+ (recommend 33 or 34)
+- x86_64 system image
+- At least 2GB RAM
 
-**選項 2: 實體裝置**
+**Option 2: Physical Device**
 - Android 7.0+ (API 24+)
-- 已啟用開發者選項
-- 已啟用 USB 調試
+- Developer Options enabled
+- USB Debug enabled
 
-### 測試前設置
+### Pre-Test Setup
 
-**關閉裝置動畫**（重要！）：
+**Disable Device Animation** (Important!):
 ```
-設定 → 開發者選項 → 將以下三項設為 "off":
+Settings → Developer Options → Set following three to "off":
 • Window animation scale
 • Transition animation scale
 • Animator duration scale
 ```
 
-**或使用命令**：
+**Or use command**:
 ```bash
 adb shell settings put global window_animation_scale 0
 adb shell settings put global transition_animation_scale 0
@@ -219,36 +273,36 @@ adb shell settings put global animator_duration_scale 0
 
 ---
 
-## 🧪 測試內容
+## 🧪 Test Content
 
-### MainActivityTest (6 個測試)
+### MainActivityTest (6 Tests)
 
-| 測試 | 描述 | 驗證內容 |
+| Test | Description | Verify Content |
 |------|------|---------|
-| testLoginScreenDisplayed | UI 元素顯示 | 所有登入元素正確顯示 |
-| testEmptyCredentials | 空白輸入 | 錯誤處理正確 |
-| testInvalidCredentials | 錯誤帳密 | 登入失敗處理 |
-| testSuccessfulLogin | 成功登入 | 跳轉到 WebView |
-| testLoginButtonDisabledDuringLogin | 載入狀態 | UI 狀態正確 |
-| testDifferentValidUsers | 多使用者 | 所有帳號可用 |
+| testLoginScreenDisplayed | UI elements display | All login elements display correctly |
+| testEmptyCredentials | Empty input | Correct error handling |
+| testInvalidCredentials | Wrong credentials | Login failure handling |
+| testSuccessfulLogin | Successful login | Jump to WebView |
+| testLoginButtonDisabledDuringLogin | Loading state | UI state correct |
+| testDifferentValidUsers | Multiple users | All accounts usable |
 
-### WebViewActivityTest (9 個測試)
+### WebViewActivityTest (9 Tests)
 
-| 測試 | 描述 | 驗證內容 |
+| Test | Description | Verify Content |
 |------|------|---------|
-| testWebViewActivityDisplayed | UI 元素顯示 | WebView 元素正確 |
-| testLoadDifferentUrl | URL 載入 | 網址載入功能 |
-| testLoadUrlWithHttps | HTTPS 支援 | HTTPS 正常載入 |
-| testLogoutButton | 登出功能 | 返回登入頁面 |
-| testWebViewLoadingProgress | 載入進度 | 進度條顯示 |
-| testEmptyUrlHandling | 錯誤處理 | 空 URL 處理 |
-| testMultipleUrlLoads | 連續載入 | 多次載入正常 |
-| testWebViewWithGoogleSearch | 外部網站 | Google 正常載入 |
-| testUserInfoPersistence | 資料持久 | 使用者資訊保持 |
+| testWebViewActivityDisplayed | UI elements display | WebView elements correct |
+| testLoadDifferentUrl | URL loading | URL load functionality |
+| testLoadUrlWithHttps | HTTPS support | HTTPS loads normally |
+| testLogoutButton | Logout functionality | Return to login page |
+| testWebViewLoadingProgress | Loading progress | Progress bar displays |
+| testEmptyUrlHandling | Error handling | Empty URL handling |
+| testMultipleUrlLoads | Continuous loading | Multiple loads normal |
+| testWebViewWithGoogleSearch | External website | Google loads normally |
+| testUserInfoPersistence | Data persistence | User info maintained |
 
-### 測試帳號
+### Test Accounts
 
-| 帳號 | 密碼 |
+| Username | Password |
 |------|------|
 | demo | password123 |
 | test | test123 |
@@ -256,146 +310,160 @@ adb shell settings put global animator_duration_scale 0
 
 ---
 
-## 📂 專案結構
+## 📂 Project Structure
 
 ```
 android-webview-login/
-├── 📄 README.md                     # 完整專案說明
-├── 📄 QUICK_START.md                # 快速開始 ⭐
-├── 📄 BUILD_TEST_GUIDE.md           # 建構測試指南
-├── 📄 CLI_TEST_GUIDE.md             # 命令列指南
-├── 📄 SUMMARY.md                    # 本總結文件 ⭐
-├── 📄 run_tests.sh                  # 測試腳本 ⭐
-├── 📄 build.gradle                  # Gradle 設定
+├── 📄 README.md                     # Complete project description
+├── 📄 QUICK_START.md                # Quick start ⭐
+├── 📄 BUILD_TEST_GUIDE.md           # Build test guide
+├── 📄 CLI_TEST_GUIDE.md             # Command line guide
+├── 📄 SUMMARY.md                    # This summary document ⭐
+├── 📄 run_tests.sh                  # Test script ⭐
+├── 📄 build.gradle                  # Gradle configuration
 ├── 📄 settings.gradle
 └── 📁 app/
     ├── 📄 build.gradle
     └── 📁 src/
-        ├── 📁 main/                 # 主要代碼
+        ├── 📁 main/                 # Main code
         │   ├── MainActivity.kt
         │   ├── MainViewModel.kt
         │   ├── WebViewActivity.kt
         │   ├── LoginService.kt
         │   └── ...
-        └── 📁 androidTest/          # 測試代碼
+        └── 📁 androidTest/          # Test code
             ├── MainActivityTest.kt
             └── WebViewActivityTest.kt
 ```
 
 ---
 
-## 🔍 疑難排解
+## 🔍 Troubleshooting
 
-### Q1: Gradle 同步失敗？
+### Q1: Gradle sync failed?
 
-**解決**：
+**Solution**:
 ```
 File → Invalidate Caches / Restart
 ```
 
-### Q2: 找不到裝置？
+### Q2: Device not found?
 
-**解決**：
+**Solution**:
 ```bash
-# 重啟 adb
+# Restart adb
 adb kill-server
 adb start-server
 adb devices
 ```
 
-### Q3: 測試一直失敗？
+### Q3: Tests always fail?
 
-**檢查**：
-- ✅ 裝置動畫已關閉
-- ✅ 網路連線正常
-- ✅ 裝置保持亮屏
-- ✅ 沒有其他應用佔用
+**Check**:
+- ✅ Device animation disabled
+- ✅ Network connection normal
+- ✅ Device screen remains on
+- ✅ No other apps occupying screen
 
-### Q4: 建構錯誤？
+### Q4: Build error?
 
-**解決**：
-1. 清理專案: Build → Clean Project
-2. 重新建構: Build → Rebuild Project
-3. 檢查 JDK 設置
+**Solution**:
+1. Clean project: Build → Clean Project
+2. Rebuild: Build → Rebuild Project
+3. Check JDK settings
 
 ---
 
-## 📊 技術規格
+## 📊 Technical Specifications
 
-- **語言**: Kotlin 1.9.20
-- **最低 SDK**: API 24 (Android 7.0)
-- **目標 SDK**: API 33 (Android 13)
-- **編譯 SDK**: API 33
-- **Java 版本**: 11
+- **Language**: Kotlin 1.9.20
+- **Min SDK**: API 24 (Android 7.0)
+- **Target SDK**: API 33 (Android 13)
+- **Compile SDK**: API 33
+- **Java Version**: 11
 - **Gradle**: 8.4
 - **AGP**: 8.2.0
-- **測試框架**: Espresso 3.5.1 + JUnit 4.13.2
+- **Test Framework**: Espresso 3.5.1 + JUnit 4.13.2
 
 ---
 
-## 🎯 結論與建議
+## 🎯 Conclusion and Recommendations
 
-### ✅ 專案完成度
+### ✅ Project Completion Status
 
-- **代碼**: 100% 完成 ✅
-- **測試**: 100% 完成 ✅
-- **文件**: 100% 完成 ✅
-- **工具**: 100% 完成 ✅
+- **Code**: 100% Complete ✅
+- **Tests**: 100% Complete ✅ (15/15 all passed)
+- **Documentation**: 100% Complete ✅
+- **Tools**: 100% Complete ✅
+- **Command Line Execution**: 100% Ready ✅
 
-### ⚠️ 當前限制
+### 🏆 Final Achievements
 
-- 命令列建構需要 JDK 17
-- JDK 21 有相容性問題
+| Item | Status | Description |
+|------|------|------|
+| Build Environment | ✅ Ready | JDK 17 + Gradle 8.4 |
+| Test Pass Rate | ✅ 100% | 15/15 all passed |
+| API Compatibility | ✅ Confirmed | API 33 fully supported |
+| Documentation Completeness | ✅ Complete | 5 complete documents |
+| Automated Script | ✅ Available | run_tests.sh |
 
-### 🎯 推薦使用方式
+### 🎯 Recommended Usage
 
-1. **開發與測試**: 使用 Android Studio（最佳體驗）
-2. **CI/CD**: 使用 JDK 17 + 命令列
-3. **快速測試**: 使用 `run_tests.sh` 腳本
+1. **Development and Testing**: Use Android Studio (Best experience)
+2. **CI/CD**: Use JDK 17 + Command Line (Verified)
+3. **Quick Testing**: Use `run_tests.sh` script (Verified)
 
-### 📈 後續改進
+### 📈 Technical Summary
 
-如需要命令列完全支援，可考慮：
-1. 等待 AGP 更新支援 JDK 21
-2. 使用 Docker 容器統一環境
-3. 建立 CI/CD pipeline
+**Success Keys**:
+1. ✅ Use JDK 17 to resolve build issues
+2. ✅ Use API 33 emulator to ensure test compatibility
+3. ✅ Improve test logic to handle WebView redirects
+4. ✅ Upgrade Espresso to 3.6.1
+
+**Verified Environment**:
+- ✅ macOS (Apple Silicon)
+- ✅ JDK 17.0.17
+- ✅ Android SDK API 33
+- ✅ Gradle 8.4 + AGP 8.2.0
+- ✅ Kotlin 1.9.20
 
 ---
 
-## 📞 需要協助？
+## 📞 Need Help?
 
-### 快速命令參考
+### Quick Command Reference
 
 ```bash
-# 開啟 Android Studio
+# Open Android Studio
 open -a "Android Studio" /Users/yinghaowang/Work/android-webview-login
 
-# 執行測試腳本
+# Run test script
 ./run_tests.sh
 
-# 手動建構
+# Manual build
 ./gradlew assembleDebug
 
-# 執行測試
+# Run tests
 ./gradlew connectedAndroidTest
 
-# 查看裝置
+# View devices
 adb devices
 
-# 安裝 APK
+# Install APK
 adb install -r app/build/outputs/apk/debug/app-debug.apk
 ```
 
-### 文件導覽
+### Documentation Navigation
 
-- **新手**: 閱讀 `QUICK_START.md`
-- **建構問題**: 閱讀 `BUILD_TEST_GUIDE.md`
-- **命令列**: 閱讀 `CLI_TEST_GUIDE.md`
-- **完整說明**: 閱讀 `README.md`
+- **Beginners**: Read `QUICK_START.md`
+- **Build Issues**: Read `BUILD_TEST_GUIDE.md`
+- **Command Line**: Read `CLI_TEST_GUIDE.md`
+- **Complete Description**: Read `README.md`
 
 ---
 
-**專案建立**: 2025-11-07
-**最後更新**: 2025-11-07
-**版本**: 1.0.0
-**狀態**: ✅ 就緒（推薦使用 Android Studio）
+**Project Created**: 2025-11-07
+**Last Updated**: 2025-11-07
+**Version**: 1.0.0
+**Status**: ✅ Completely Ready (100% tests passed, command line available)

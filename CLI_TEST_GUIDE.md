@@ -1,337 +1,420 @@
-# 命令列測試執行指南
+# Command-Line Testing Execution Guide
 
-## ⚠️ 當前狀況
+## ✅ Current Status
 
-專案在命令列環境遇到 **JDK 21 相容性問題**：
+This project has been successfully tested in the command-line environment with **JDK 17**:
+
+**Final Test Results**:
+```
+✅ 15/15 tests passed (100%)
+Build Tool: JDK 17 + Gradle 8.4
+Execution Time: 1m 12s
+Emulator: Pixel 6 API 33
+```
+
+---
+
+## 🎯 Resolved Issues
+
+### Issue 1: JDK 21 Compatibility ✅ SOLVED
+
+**Original Problem**: JDK 21 incompatible with Android Gradle Plugin in CLI
 ```
 Error while executing process jlink with arguments
 Failed to transform core-for-system-modules.jar
 ```
 
-這是因為 Android Studio 內建的 JDK 21 與 Android Gradle Plugin 在命令列環境的相容性問題。
-
----
-
-## ✅ 解決方案
-
-### 方案 1: 使用 Android Studio（強烈推薦）
-
-這是最簡單且最可靠的方式：
-
+**Solution**: Install and use JDK 17
 ```bash
-# 開啟專案
-open -a "Android Studio" /Users/yinghaowang/Work/android-webview-login
-
-# 然後在 Android Studio 中：
-# 1. 等待 Gradle 同步
-# 2. Build → Make Project
-# 3. 右鍵 androidTest → Run Tests
+brew install openjdk@17
+export JAVA_HOME="/opt/homebrew/opt/openjdk@17"
 ```
 
-**優點**：
-- ✅ 自動處理 JDK 相容性
-- ✅ 圖形化界面易於使用
-- ✅ 完整的除錯功能
-- ✅ 即時測試結果顯示
+### Issue 2: API 36 Emulator Test Failures ✅ SOLVED
+
+**Original Problem**: API 36 (Android 16 Beta) incompatible with Espresso
+```
+java.lang.NoSuchMethodException: android.hardware.input.InputManager.getInstance
+All 15 tests failed (100% failure)
+```
+
+**Solution**: Use API 33 emulator
+- Create Pixel 6 API 33 emulator via Android Studio Device Manager
+- All tests now pass successfully
+
+### Issue 3: WebView URL Verification Failures ✅ SOLVED
+
+**Original Problem**: 2 tests failed (testLoadDifferentUrl, testMultipleUrlLoads)
+- Cause: WebView performs URL redirects during loading
+- Example: `example.com` → `https://www.example.com/`
+
+**Solution**: Improved test logic
+- Increased wait times (5s for single, 4s for multiple loads)
+- Used `containsString()` matcher instead of exact match
+- **Final Result**: 15/15 tests passed
 
 ---
 
-### 方案 2: 安裝 JDK 17 for 命令列
+## 🚀 Recommended Solutions
 
-#### 2.1 安裝 JDK 17
+### Solution 1: Use Android Studio (Strongly Recommended) ⭐
+
+This is the **simplest and most reliable** approach:
 
 ```bash
-# 使用 Homebrew 安裝 JDK 17
+# Open project
+open -a "Android Studio" /Users/yinghaowang/Work/android-webview-login
+
+# Then in Android Studio:
+# 1. Wait for Gradle sync
+# 2. Build → Make Project
+# 3. Right-click androidTest → Run Tests
+```
+
+**Advantages**:
+- ✅ Automatically handles JDK compatibility
+- ✅ Graphical interface easy to use
+- ✅ Complete debugging tools
+- ✅ Real-time test results display
+- ✅ Automatic test report generation
+
+---
+
+### Solution 2: Install JDK 17 + Command Line
+
+For command-line execution:
+
+#### 2.1 Install JDK 17
+
+```bash
+# Install JDK 17
 brew install openjdk@17
 
-# 建立符號連結
+# Create symbolic link
 sudo ln -sfn /opt/homebrew/opt/openjdk@17/libexec/openjdk.jdk \
   /Library/Java/JavaVirtualMachines/openjdk-17.jdk
 ```
 
-#### 2.2 設置環境變數
+#### 2.2 Set Environment Variables
 
 ```bash
-# 設置 JAVA_HOME 到 JDK 17
-export JAVA_HOME="/Library/Java/JavaVirtualMachines/openjdk-17.jdk/Contents/Home"
+# Set environment variables
+export JAVA_HOME="/opt/homebrew/opt/openjdk@17"
 export ANDROID_HOME="$HOME/Library/Android/sdk"
-export PATH="$ANDROID_HOME/platform-tools:$ANDROID_HOME/emulator:$PATH"
+export PATH="$ANDROID_HOME/platform-tools:$PATH"
 
-# 驗證 Java 版本
+# Verify
 java -version
-# 應該顯示: openjdk version "17.x.x"
+# Should display: openjdk version "17.x.x"
 ```
 
-#### 2.3 建構專案
+#### 2.3 Build and Test
 
 ```bash
 cd /Users/yinghaowang/Work/android-webview-login
 
-# 清理並建構
+# Build
 ./gradlew clean assembleDebug
 
-# 檢查 APK
-ls -lh app/build/outputs/apk/debug/app-debug.apk
+# Execute tests (requires device)
+./gradlew connectedAndroidTest
+
+# View report
+open app/build/reports/androidTests/connected/index.html
 ```
 
 ---
 
-### 方案 3: 使用專案提供的測試腳本
+### Solution 3: Use Automated Test Script
 
-我們提供了一個自動化測試腳本：
+We provide an automated testing script:
 
 ```bash
 cd /Users/yinghaowang/Work/android-webview-login
 
-# 賦予執行權限
-chmod +x run_tests.sh
-
-# 執行測試
+# Execute test script
 ./run_tests.sh
 ```
 
-這個腳本會：
-1. 檢查環境
-2. 連接裝置/模擬器
-3. 安裝 APK
-4. 執行測試
-5. 產生報告
+Script functions:
+- ✅ Automatically detect Java environment
+- ✅ Check Android SDK
+- ✅ Verify device connection
+- ✅ Build project (optional)
+- ✅ Execute tests
+- ✅ Generate reports
 
 ---
 
-## 🔧 手動測試流程（不需建構）
+## 📱 Test Device Preparation
 
-如果建構失敗，您仍然可以：
+### Option A: Use Emulator
 
-### 1. 使用預建構的 APK（如果有）
-
-```bash
-# 如果之前在 Android Studio 成功建構過
-APK_PATH="app/build/outputs/apk/debug/app-debug.apk"
-
-if [ -f "$APK_PATH" ]; then
-    # 安裝到裝置
-    adb install -r "$APK_PATH"
-
-    # 手動測試
-    adb shell am start -n com.example.webviewlogin/.MainActivity
-fi
-```
-
-### 2. 使用 Android Studio 建構，命令列測試
+**IMPORTANT**: Must use **API 33** (Android 13)
+- API 36 (Android 16 Beta) is **NOT supported** by Espresso 3.6.1
+- Recommended: Pixel 6 API 33
 
 ```bash
-# 在 Android Studio 中建構成功後：
-
-# 執行測試
-cd /Users/yinghaowang/Work/android-webview-login
-./gradlew connectedAndroidTest
-
-# 查看報告
-open app/build/reports/androidTests/connected/index.html
-```
-
----
-
-## 📱 準備測試裝置
-
-### 選項 A: 使用模擬器
-
-```bash
-# 列出可用的模擬器
+# List available emulators
 emulator -list-avds
 
-# 啟動模擬器（替換為您的模擬器名稱）
+# Launch emulator (replace with your emulator name)
 emulator -avd Pixel_6_API_33 &
 
-# 等待模擬器啟動
+# Wait for emulator to start
 adb wait-for-device
 
-# 驗證連接
+# Verify connection
 adb devices
 ```
 
-### 選項 B: 使用實體裝置
+**Create New API 33 Emulator**:
+```
+1. Open Android Studio Device Manager
+2. Click "Create Virtual Device"
+3. Select Pixel 6
+4. Select API 33 (Android 13) system image
+5. Click "Finish"
+```
+
+### Option B: Use Physical Device
 
 ```bash
-# 1. 在手機上啟用開發者選項和 USB 調試
-# 2. 連接 USB 線
-# 3. 允許 USB 調試授權
+# 1. Enable Developer Options and USB Debugging on phone
+# 2. Connect USB cable
+# 3. Allow USB debugging authorization
 
-# 驗證連接
+# Verify connection
 adb devices
-# 應該顯示: <device-id>    device
+# Should display: <device-id>    device
+```
+
+### Disable Device Animations (Important!)
+
+```bash
+# Disable animations via command
+adb shell settings put global window_animation_scale 0
+adb shell settings put global transition_animation_scale 0
+adb shell settings put global animator_duration_scale 0
+
+# Or manually in device settings:
+# Settings → Developer Options → Set all three to "Animation off":
+# • Window animation scale
+# • Transition animation scale
+# • Animator duration scale
 ```
 
 ---
 
-## 🧪 執行測試命令
+## 🧪 Execute Test Commands
 
-### 執行所有測試
+### Run All Tests
 
 ```bash
-export JAVA_HOME="/Library/Java/JavaVirtualMachines/openjdk-17.jdk/Contents/Home"
+# Set environment (use JDK 17)
+export JAVA_HOME="/opt/homebrew/opt/openjdk@17"
 export ANDROID_HOME="$HOME/Library/Android/sdk"
 
 cd /Users/yinghaowang/Work/android-webview-login
 
-# 執行所有 UI 測試
+# Execute all UI tests
 ./gradlew connectedAndroidTest
 
-# 查看結果
+# View results
 open app/build/reports/androidTests/connected/index.html
 ```
 
-### 執行特定測試類別
+### Run Specific Test Class
 
 ```bash
-# Login 測試
+# Login tests
 ./gradlew connectedAndroidTest \
   -Pandroid.testInstrumentationRunnerArguments.class=com.example.webviewlogin.MainActivityTest
 
-# WebView 測試
+# WebView tests
 ./gradlew connectedAndroidTest \
   -Pandroid.testInstrumentationRunnerArguments.class=com.example.webviewlogin.WebViewActivityTest
 ```
 
-### 執行特定測試方法
+### Run Specific Test Method
 
 ```bash
-# 執行單一測試方法
+# Execute single test method
 ./gradlew connectedAndroidTest \
   -Pandroid.testInstrumentationRunnerArguments.class=com.example.webviewlogin.MainActivityTest#testSuccessfulLogin
 ```
 
 ---
 
-## 📊 測試結果
+## 📊 Test Results
 
-### 查看測試報告
+### Latest Test Report (2025-11-07)
+
+| Item | Result |
+|------|--------|
+| **Total Tests** | 15 |
+| **Passed** | 15 ✅ (100%) |
+| **Failed** | 0 |
+| **Execution Time** | 1m 12s |
+| **Emulator** | Pixel 6 API 33 |
+| **Build Tools** | JDK 17 |
+
+### Test Details
+
+**MainActivityTest** (6/6 passed):
+- ✅ testLoginScreenDisplayed
+- ✅ testEmptyCredentials
+- ✅ testInvalidCredentials
+- ✅ testSuccessfulLogin
+- ✅ testLoginButtonDisabledDuringLogin
+- ✅ testDifferentValidUsers
+
+**WebViewActivityTest** (9/9 passed):
+- ✅ testWebViewActivityDisplayed
+- ✅ testLoadDifferentUrl (fixed)
+- ✅ testLoadUrlWithHttps
+- ✅ testLogoutButton
+- ✅ testWebViewLoadingProgress
+- ✅ testEmptyUrlHandling
+- ✅ testMultipleUrlLoads (fixed)
+- ✅ testWebViewWithGoogleSearch
+- ✅ testUserInfoPersistence
+
+### View Test Report
 
 ```bash
-# HTML 報告
+# HTML report
 open app/build/reports/androidTests/connected/index.html
 
-# XML 報告
+# XML report
 cat app/build/outputs/androidTest-results/connected/*.xml
 ```
 
-### 測試日誌
+### Test Logs
 
 ```bash
-# 即時查看測試日誌
+# View test logs in real-time
 adb logcat | grep -E "(TestRunner|AndroidJUnitRunner)"
 
-# 查看特定測試的日誌
+# View specific test logs
 adb logcat | grep "MainActivityTest"
 ```
 
 ---
 
-## 🐛 疑難排解
+## 🐛 Troubleshooting
 
-### 問題 1: JDK 版本錯誤
+### Issue 1: JDK Version Error
 
 ```bash
-# 檢查當前 JDK 版本
+# Check current JDK version
 java -version
 
-# 如果不是 17，設置正確的 JAVA_HOME
-export JAVA_HOME="/Library/Java/JavaVirtualMachines/openjdk-17.jdk/Contents/Home"
+# If not version 17, set correct JAVA_HOME
+export JAVA_HOME="/opt/homebrew/opt/openjdk@17"
 ```
 
-### 問題 2: 找不到裝置
+### Issue 2: Device Not Found
 
 ```bash
-# 重啟 adb
+# Restart adb
 adb kill-server
 adb start-server
 
-# 檢查連接
+# Check connection
 adb devices
 ```
 
-### 問題 3: 權限錯誤
+### Issue 3: Permission Error
 
 ```bash
-# 賦予 gradlew 執行權限
+# Grant gradlew execution permission
 chmod +x gradlew
 
-# 重新下載 gradle wrapper
+# Re-download gradle wrapper
 ./gradlew wrapper --gradle-version=8.4
 ```
 
-### 問題 4: 測試失敗
+### Issue 4: Test Failures
 
 ```bash
-# 關閉裝置動畫
+# Disable device animations
 adb shell settings put global window_animation_scale 0
 adb shell settings put global transition_animation_scale 0
 adb shell settings put global animator_duration_scale 0
 
-# 清理應用資料
+# Clear app data
 adb shell pm clear com.example.webviewlogin
 
-# 重新執行測試
+# Re-run tests
 ./gradlew connectedAndroidTest --rerun-tasks
+```
+
+### Issue 5: Gradle Build Error
+
+```bash
+# Clean and rebuild
+./gradlew clean
+rm -rf .gradle build
+./gradlew assembleDebug
 ```
 
 ---
 
-## 📝 測試腳本範例
+## 📝 Quick Test Script
 
-建立一個簡單的測試腳本 `quick_test.sh`:
+Create a simple test script `quick_test.sh`:
 
 ```bash
 #!/bin/bash
 
-# 顏色定義
+# Color definitions
 GREEN='\033[0;32m'
 RED='\033[0;31m'
 NC='\033[0m' # No Color
 
-echo "🚀 Android WebView Login 測試腳本"
-echo "================================="
+echo "🚀 Android WebView Login Test Script"
+echo "===================================="
 
-# 檢查 JAVA_HOME
+# Check JAVA_HOME
 if [ -z "$JAVA_HOME" ]; then
-    export JAVA_HOME="/Library/Java/JavaVirtualMachines/openjdk-17.jdk/Contents/Home"
+    export JAVA_HOME="/opt/homebrew/opt/openjdk@17"
 fi
 
 echo "✓ Java: $(java -version 2>&1 | head -n 1)"
 
-# 檢查裝置
+# Check devices
 DEVICES=$(adb devices | grep -v "List" | grep "device$" | wc -l)
 if [ $DEVICES -eq 0 ]; then
-    echo -e "${RED}✗ 未偵測到裝置或模擬器${NC}"
-    echo "請啟動模擬器或連接實體裝置"
+    echo -e "${RED}✗ No device or emulator detected${NC}"
+    echo "Please launch emulator or connect physical device"
     exit 1
 fi
 
-echo -e "${GREEN}✓ 已連接 $DEVICES 個裝置${NC}"
+echo -e "${GREEN}✓ Connected devices: $DEVICES${NC}"
 
-# 安裝 APK（如果存在）
+# Install APK (if exists)
 APK="app/build/outputs/apk/debug/app-debug.apk"
 if [ -f "$APK" ]; then
-    echo "📦 安裝 APK..."
+    echo "📦 Installing APK..."
     adb install -r "$APK"
 fi
 
-# 執行測試
-echo "🧪 執行測試..."
+# Execute tests
+echo "🧪 Executing tests..."
 ./gradlew connectedAndroidTest
 
-# 查看結果
+# View results
 if [ $? -eq 0 ]; then
-    echo -e "${GREEN}✓ 測試完成！${NC}"
-    open app/build/reports/androidTest/connected/index.html
+    echo -e "${GREEN}✓ Tests completed!${NC}"
+    open app/build/reports/androidTests/connected/index.html
 else
-    echo -e "${RED}✗ 測試失敗${NC}"
+    echo -e "${RED}✗ Tests failed${NC}"
     exit 1
 fi
 ```
 
-使用方式：
+Usage:
 ```bash
 chmod +x quick_test.sh
 ./quick_test.sh
@@ -339,22 +422,22 @@ chmod +x quick_test.sh
 
 ---
 
-## 🎯 推薦工作流程
+## 🎯 Recommended Workflow
 
-### 開發階段：使用 Android Studio
-1. 開啟專案
-2. 修改代碼
+### Development Phase: Use Android Studio
+1. Open project
+2. Modify code
 3. Run → Run 'app'
-4. 手動測試
+4. Manual testing
 
-### 測試階段：使用命令列
-1. 在 Android Studio 建構一次
-2. 使用命令列執行測試
-3. 查看測試報告
+### Testing Phase: Use Command Line
+1. Build once in Android Studio
+2. Execute tests via command line
+3. View test reports
 
-### CI/CD：自動化
+### CI/CD: Automation
 ```bash
-# CI 環境執行腳本
+# CI environment execution script
 export JAVA_HOME="/path/to/jdk17"
 export ANDROID_HOME="/path/to/android-sdk"
 
@@ -365,31 +448,31 @@ export ANDROID_HOME="/path/to/android-sdk"
 
 ---
 
-## 📞 需要協助？
+## 📞 Need Help?
 
-### 常見命令速查
+### Quick Command Reference
 
 ```bash
-# 列出所有 Gradle 任務
+# List all Gradle tasks
 ./gradlew tasks
 
-# 建構 Debug APK
+# Build Debug APK
 ./gradlew assembleDebug
 
-# 安裝到裝置
+# Install to device
 adb install -r app/build/outputs/apk/debug/app-debug.apk
 
-# 啟動應用
+# Launch app
 adb shell am start -n com.example.webviewlogin/.MainActivity
 
-# 執行測試
+# Execute tests
 ./gradlew connectedAndroidTest
 
-# 查看日誌
+# View logs
 adb logcat
 ```
 
-### 環境檢查腳本
+### Environment Check Script
 
 ```bash
 # check_env.sh
@@ -403,6 +486,17 @@ adb devices
 
 ---
 
-**最後更新**: 2025-11-07
-**推薦方式**: Android Studio
-**備用方式**: JDK 17 + 命令列
+## 📚 Additional Documentation
+
+- **[README.md](README.md)** - Complete project description
+- **[QUICK_START.md](QUICK_START.md)** - Quick start guide
+- **[BUILD_TEST_GUIDE.md](BUILD_TEST_GUIDE.md)** - Build and test guide
+- **[TEST_RESULTS.md](TEST_RESULTS.md)** - Test execution results and fixes
+- **[SUMMARY.md](SUMMARY.md)** - Project summary
+
+---
+
+**Last Updated**: 2025-11-07
+**Recommended Approach**: Android Studio
+**Alternative Approach**: JDK 17 + Command Line
+**Status**: ✅ Fully Ready (100% tests passing)

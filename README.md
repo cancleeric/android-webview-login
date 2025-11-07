@@ -1,18 +1,18 @@
-# Android WebView + Login 測試專案
+# Android WebView + Login Testing Project
 
-這是一個使用 Kotlin 開發的 Android 原生應用程式，展示了 Login 登入功能和 WebView 網頁瀏覽功能，並包含完整的 Espresso UI 自動化測試。
+This is a native Android application developed in Kotlin, showcasing Login authentication and WebView browsing functionality, with comprehensive Espresso UI automated testing.
 
-## 📋 專案特色
+## 📋 Project Features
 
-- ✅ **Kotlin 原生開發**：使用最新的 Kotlin 語法和 Android 最佳實踐
-- ✅ **Material Design**：採用 Material Design 設計規範
-- ✅ **MVVM 架構**：使用 ViewModel 和 LiveData 實現 MVVM 架構
-- ✅ **Mock 登入服務**：內建模擬登入服務，無需實際後端
-- ✅ **WebView 整合**：完整的 WebView 實作，支援網頁瀏覽
-- ✅ **Espresso 測試**：完整的 UI 自動化測試覆蓋
-- ✅ **ViewBinding**：使用 ViewBinding 提高代碼安全性
+- ✅ **Native Kotlin Development**: Using latest Kotlin syntax and Android best practices
+- ✅ **Material Design**: Adopting Material Design specifications
+- ✅ **MVVM Architecture**: Implementing MVVM architecture with ViewModel and LiveData
+- ✅ **Mock Login Service**: Built-in mock login service, no actual backend required
+- ✅ **WebView Integration**: Complete WebView implementation supporting web browsing
+- ✅ **Espresso Testing**: Complete UI automated test coverage
+- ✅ **ViewBinding**: Using ViewBinding for improved code safety
 
-## 🏗️ 專案結構
+## 🏗️ Project Structure
 
 ```
 android-webview-login/
@@ -20,14 +20,14 @@ android-webview-login/
 │   ├── src/
 │   │   ├── main/
 │   │   │   ├── java/com/example/webviewlogin/
-│   │   │   │   ├── model/              # 資料模型
+│   │   │   │   ├── model/              # Data models
 │   │   │   │   │   ├── User.kt
 │   │   │   │   │   └── LoginResult.kt
-│   │   │   │   ├── service/            # 服務層
+│   │   │   │   ├── service/            # Service layer
 │   │   │   │   │   └── LoginService.kt
-│   │   │   │   ├── MainActivity.kt     # 登入畫面
-│   │   │   │   ├── MainViewModel.kt    # 登入 ViewModel
-│   │   │   │   └── WebViewActivity.kt  # WebView 畫面
+│   │   │   │   ├── MainActivity.kt     # Login screen
+│   │   │   │   ├── MainViewModel.kt    # Login ViewModel
+│   │   │   │   └── WebViewActivity.kt  # WebView screen
 │   │   │   ├── res/
 │   │   │   │   ├── layout/
 │   │   │   │   │   ├── activity_main.xml
@@ -36,178 +36,203 @@ android-webview-login/
 │   │   │   └── AndroidManifest.xml
 │   │   └── androidTest/
 │   │       └── java/com/example/webviewlogin/
-│   │           ├── MainActivityTest.kt      # Login 測試
-│   │           └── WebViewActivityTest.kt   # WebView 測試
+│   │           ├── MainActivityTest.kt      # Login tests
+│   │           └── WebViewActivityTest.kt   # WebView tests
 │   └── build.gradle
 ├── build.gradle
 ├── settings.gradle
 └── README.md
 ```
 
-## 🚀 快速開始
+## 🚀 Quick Start
 
-### 環境需求
+### Environment Requirements
 
-- Android Studio Hedgehog (2023.1.1) 或更新版本
-- JDK 17 或更新版本
-- Android SDK API Level 34
-- Gradle 8.1.4
+- Android Studio Hedgehog (2023.1.1) or newer
+- JDK 17 (recommended for command-line compatibility)
+- Android SDK API Level 33
+- Gradle 8.4
 
-### 安裝步驟
+### Installation Steps
 
-1. **Clone 或複製專案**
+1. **Clone or copy the project**
    ```bash
    cd /Users/yinghaowang/Work/android-webview-login
    ```
 
-2. **使用 Android Studio 開啟專案**
-   - 開啟 Android Studio
-   - 選擇 "Open an Existing Project"
-   - 選擇 `android-webview-login` 資料夾
+2. **Open the project in Android Studio**
+   - Open Android Studio
+   - Select "Open an Existing Project"
+   - Choose the `android-webview-login` folder
 
-3. **等待 Gradle 同步完成**
-   - Android Studio 會自動下載相依套件
+3. **Wait for Gradle sync to complete**
+   - Android Studio will automatically download dependencies
 
-4. **執行應用程式**
-   - 連接實體裝置或啟動模擬器
-   - 點擊 "Run" 按鈕（綠色三角形）
+4. **Run the application**
+   - Connect a physical device or launch an emulator
+   - Click the "Run" button (green triangle)
 
-## 🔐 測試帳號
+## 🔐 Test Accounts
 
-應用程式內建了三組測試帳號：
+The application includes three built-in test accounts:
 
-| 使用者名稱 | 密碼 |
-|-----------|------|
+| Username | Password |
+|----------|----------|
 | demo | password123 |
 | test | test123 |
 | admin | admin123 |
 
-## 🧪 執行測試
+## 🧪 Running Tests
 
-### 使用 Android Studio
+### Using Android Studio
 
-1. 在專案導航中找到測試檔案：
+1. Find test files in project navigator:
    - `app/src/androidTest/java/com/example/webviewlogin/MainActivityTest.kt`
    - `app/src/androidTest/java/com/example/webviewlogin/WebViewActivityTest.kt`
 
-2. 右鍵點擊測試檔案或測試類別
+2. Right-click on test file or test class
 
-3. 選擇 "Run 'MainActivityTest'" 或 "Run 'WebViewActivityTest'"
+3. Select "Run 'MainActivityTest'" or "Run 'WebViewActivityTest'"
 
-### 使用命令列
+### Using Command Line
+
+**Preparation**: Ensure emulator is **API 33** (Android 13)
+- API 36 (Android 16 Beta) is **NOT supported** for Espresso testing
+- Recommended: Pixel 6 API 33 emulator
 
 ```bash
-# 執行所有 UI 測試
+# Set up environment (use JDK 17)
+export JAVA_HOME="/opt/homebrew/opt/openjdk@17"
+export ANDROID_HOME="$HOME/Library/Android/sdk"
+
+# Run all UI tests
 ./gradlew connectedAndroidTest
 
-# 執行特定測試類別
+# Run specific test class
 ./gradlew connectedAndroidTest -Pandroid.testInstrumentationRunnerArguments.class=com.example.webviewlogin.MainActivityTest
 ```
 
-## 📱 功能說明
+## 📊 Test Results
 
-### 1. 登入功能 (MainActivity)
+### Latest Test Results (2025-11-07)
 
-- **功能**：
-  - 使用者名稱和密碼輸入
-  - 表單驗證
-  - Mock 登入服務驗證
-  - 載入狀態顯示
-  - 登入成功後跳轉到 WebView
+**Status**: ✅ **15/15 tests passed (100%)**
 
-- **測試覆蓋**：
-  - ✅ 畫面元素顯示測試
-  - ✅ 空白帳號密碼測試
-  - ✅ 錯誤帳號密碼測試
-  - ✅ 正確帳號密碼測試
-  - ✅ 登入期間按鈕禁用測試
-  - ✅ 多組使用者測試
+| Test Suite | Passed | Failed | Pass Rate | Duration |
+|------------|--------|--------|-----------|----------|
+| MainActivityTest | 6/6 | 0 | 100% | 27.5s |
+| WebViewActivityTest | 9/9 | 0 | 100% | 39.9s |
+| **Total** | **15/15** | **0** | **100%** | **1m 7s** |
 
-### 2. WebView 功能 (WebViewActivity)
+**Test Environment**:
+- Emulator: Pixel 6 API 33
+- Build Tools: JDK 17 + Gradle 8.4
+- Test Framework: Espresso 3.6.1
 
-- **功能**：
-  - 顯示登入使用者資訊
-  - URL 輸入和載入
-  - 自動添加 HTTPS 協議
-  - 網頁載入進度條
-  - 頁面前進/後退
-  - 登出功能
+## 📱 Feature Description
 
-- **測試覆蓋**：
-  - ✅ 畫面元素顯示測試
-  - ✅ 載入不同 URL 測試
-  - ✅ HTTPS URL 測試
-  - ✅ 登出按鈕測試
-  - ✅ 空白 URL 處理測試
-  - ✅ 多次載入測試
-  - ✅ 使用者資訊持久性測試
+### 1. Login Feature (MainActivity)
 
-## 🛠️ 技術架構
+- **Features**:
+  - Username and password input
+  - Form validation
+  - Mock login service authentication
+  - Loading state display
+  - Navigate to WebView after successful login
 
-### 使用的技術和函式庫
+- **Test Coverage**:
+  - ✅ Screen elements display test
+  - ✅ Empty credentials test
+  - ✅ Invalid credentials test
+  - ✅ Valid credentials test
+  - ✅ Login button disabled during login test
+  - ✅ Multiple users test
 
-- **語言**：Kotlin 1.9.20
-- **UI 框架**：AndroidX, Material Design Components
-- **架構元件**：
+### 2. WebView Feature (WebViewActivity)
+
+- **Features**:
+  - Display logged-in user information
+  - URL input and loading
+  - Automatic HTTPS protocol addition
+  - Page loading progress bar
+  - Page forward/backward navigation
+  - Logout functionality
+
+- **Test Coverage**:
+  - ✅ Screen elements display test
+  - ✅ Load different URL test
+  - ✅ HTTPS URL test
+  - ✅ Logout button test
+  - ✅ Empty URL handling test
+  - ✅ Multiple URL loads test
+  - ✅ User information persistence test
+
+## 🛠️ Technical Architecture
+
+### Technologies and Libraries
+
+- **Language**: Kotlin 1.9.20
+- **UI Framework**: AndroidX, Material Design Components
+- **Architecture Components**:
   - ViewModel
   - LiveData
   - ViewBinding
-- **WebView**：AndroidX WebKit
-- **協程**：Kotlin Coroutines
-- **測試框架**：
-  - Espresso (UI 測試)
-  - JUnit 4
-  - Mockito
+- **WebView**: AndroidX WebKit
+- **Coroutines**: Kotlin Coroutines
+- **Testing Framework**:
+  - Espresso 3.6.1 (UI testing)
+  - JUnit 4.13.2
+  - Mockito 5.7.0
 
-### 架構模式
+### Architecture Pattern
 
-本專案採用 **MVVM (Model-View-ViewModel)** 架構：
+This project adopts **MVVM (Model-View-ViewModel)** architecture:
 
 ```
 View (Activity) ←→ ViewModel ←→ Model (Service/Repository)
 ```
 
-- **View**：MainActivity, WebViewActivity
-- **ViewModel**：MainViewModel
-- **Model**：LoginService, User, LoginResult
+- **View**: MainActivity, WebViewActivity
+- **ViewModel**: MainViewModel
+- **Model**: LoginService, User, LoginResult
 
-## 📝 測試案例說明
+## 📝 Test Case Description
 
-### MainActivityTest (登入測試)
+### MainActivityTest (Login Tests)
 
-1. **testLoginScreenDisplayed**：驗證登入畫面元素正確顯示
-2. **testEmptyCredentials**：測試空白帳號密碼的處理
-3. **testInvalidCredentials**：測試錯誤帳號密碼的處理
-4. **testSuccessfulLogin**：測試成功登入並跳轉
-5. **testLoginButtonDisabledDuringLogin**：測試登入期間 UI 狀態
-6. **testDifferentValidUsers**：測試多組有效使用者登入
+1. **testLoginScreenDisplayed**: Verify login screen elements are displayed correctly
+2. **testEmptyCredentials**: Test handling of empty username/password
+3. **testInvalidCredentials**: Test handling of invalid credentials
+4. **testSuccessfulLogin**: Test successful login and navigation
+5. **testLoginButtonDisabledDuringLogin**: Test UI state during login
+6. **testDifferentValidUsers**: Test login with multiple valid users
 
-### WebViewActivityTest (WebView 測試)
+### WebViewActivityTest (WebView Tests)
 
-1. **testWebViewActivityDisplayed**：驗證 WebView 畫面元素
-2. **testLoadDifferentUrl**：測試載入不同網址
-3. **testLoadUrlWithHttps**：測試 HTTPS 網址載入
-4. **testLogoutButton**：測試登出功能
-5. **testWebViewLoadingProgress**：測試載入進度
-6. **testEmptyUrlHandling**：測試空白 URL 處理
-7. **testMultipleUrlLoads**：測試連續載入多個網址
-8. **testWebViewWithGoogleSearch**：測試載入 Google 網頁
-9. **testUserInfoPersistence**：測試使用者資訊持久性
+1. **testWebViewActivityDisplayed**: Verify WebView screen elements
+2. **testLoadDifferentUrl**: Test loading different URLs
+3. **testLoadUrlWithHttps**: Test HTTPS URL loading
+4. **testLogoutButton**: Test logout functionality
+5. **testWebViewLoadingProgress**: Test loading progress display
+6. **testEmptyUrlHandling**: Test empty URL handling
+7. **testMultipleUrlLoads**: Test loading multiple URLs consecutively
+8. **testWebViewWithGoogleSearch**: Test loading Google webpage
+9. **testUserInfoPersistence**: Test user information persistence
 
-## 🔍 程式碼亮點
+## 🔍 Code Highlights
 
-### 1. LoginService - Mock 登入服務
+### 1. LoginService - Mock Login Service
 
 ```kotlin
 class LoginService {
     suspend fun login(username: String, password: String): LoginResult {
-        delay(1000) // 模擬網路延遲
-        // 驗證邏輯...
+        delay(1000) // Simulate network delay
+        // Validation logic...
     }
 }
 ```
 
-### 2. MainViewModel - MVVM 架構
+### 2. MainViewModel - MVVM Architecture
 
 ```kotlin
 class MainViewModel : ViewModel() {
@@ -216,13 +241,13 @@ class MainViewModel : ViewModel() {
 
     fun login(username: String, password: String) {
         viewModelScope.launch {
-            // 非同步登入邏輯
+            // Asynchronous login logic
         }
     }
 }
 ```
 
-### 3. Espresso 測試範例
+### 3. Espresso Test Example
 
 ```kotlin
 @Test
@@ -234,45 +259,72 @@ fun testSuccessfulLogin() {
     onView(withId(R.id.loginButton))
         .perform(click())
 
-    // 驗證跳轉成功
+    // Verify successful navigation
     onView(withId(R.id.webView))
         .check(matches(isDisplayed()))
 }
 ```
 
-## 🐛 疑難排解
+## 🐛 Troubleshooting
 
-### 問題：Gradle 同步失敗
+### Issue: Gradle Sync Failed
 
-**解決方案**：
+**Solution**:
 ```bash
 ./gradlew clean
 ./gradlew build --refresh-dependencies
 ```
 
-### 問題：測試執行失敗
+### Issue: Tests Execution Failed
 
-**解決方案**：
-1. 確保模擬器或實體裝置已連接
-2. 關閉裝置的動畫效果（開發者選項中）
-3. 確保網路連線正常（部分 WebView 測試需要網路）
+**Solution**:
+1. Ensure emulator or physical device is connected
+2. Disable device animations (in Developer Options)
+3. Ensure network connection is working (some WebView tests require internet)
 
-### 問題：ViewBinding 錯誤
+### Issue: ViewBinding Error
 
-**解決方案**：
-1. Clean Project：Build → Clean Project
-2. Rebuild Project：Build → Rebuild Project
+**Solution**:
+1. Clean Project: Build → Clean Project
+2. Rebuild Project: Build → Rebuild Project
 
-## 📄 授權
+### Issue: JDK Compatibility (Command Line)
 
-本專案為教學示範專案，可自由使用和修改。
+**Problem**: JDK 21 incompatible with Android Gradle Plugin in CLI
 
-## 📧 聯絡資訊
+**Solution**: Use JDK 17
+```bash
+brew install openjdk@17
+export JAVA_HOME="/opt/homebrew/opt/openjdk@17"
+```
 
-如有問題或建議，歡迎提出 Issue 或 Pull Request。
+### Issue: API 36 Emulator Test Failures
+
+**Problem**: All tests fail on API 36 (Android 16 Beta) emulator
+
+**Solution**: Use API 33 emulator instead
+- API 36 Beta has internal API changes not supported by Espresso 3.6.1
+- Create Pixel 6 API 33 emulator via Android Studio Device Manager
+
+## 📄 License
+
+This project is for educational and demonstration purposes. Free to use and modify.
+
+## 📧 Contact
+
+For questions or suggestions, feel free to open an Issue or Pull Request.
 
 ---
 
-**建立日期**：2025-11-07
-**版本**：1.0.0
-**開發工具**：Android Studio Hedgehog | 2023.1.1
+**Created**: 2025-11-07
+**Version**: 1.0.0
+**Status**: ✅ Fully Ready (100% tests passing, command-line compatible with JDK 17)
+**Development Tools**: Android Studio Hedgehog | 2023.1.1
+
+## 📚 Additional Documentation
+
+- **[QUICK_START.md](QUICK_START.md)** - Quick start guide for new users
+- **[CLI_TEST_GUIDE.md](CLI_TEST_GUIDE.md)** - Command-line testing guide
+- **[BUILD_TEST_GUIDE.md](BUILD_TEST_GUIDE.md)** - Detailed build and test guide
+- **[TEST_RESULTS.md](TEST_RESULTS.md)** - Complete test execution results and fix history
+- **[SUMMARY.md](SUMMARY.md)** - Project summary and final status
