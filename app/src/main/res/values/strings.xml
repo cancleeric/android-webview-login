@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">WebView Login Demo</string>
+    <string name="webview_title">WebView</string>
+
+    <!-- Login Screen -->
+    <string name="login_title">登入</string>
+    <string name="username_hint">使用者名稱</string>
+    <string name="password_hint">密碼</string>
+    <string name="login_button">登入</string>
+    <string name="login_success">登入成功！</string>
+    <string name="login_failed">登入失敗，請檢查帳號密碼</string>
+    <string name="empty_credentials">請輸入帳號和密碼</string>
+
+    <!-- Test users -->
+    <string name="test_user_info">測試帳號: demo / password123</string>
+</resources>
