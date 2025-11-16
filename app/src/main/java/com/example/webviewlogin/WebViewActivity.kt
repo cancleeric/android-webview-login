@@ -61,6 +61,10 @@ class WebViewActivity : AppCompatActivity() {
             settings.useWideViewPort = true
             settings.builtInZoomControls = true
             settings.displayZoomControls = false
+            settings.allowFileAccess = true
+            settings.allowContentAccess = true
+            settings.allowFileAccessFromFileURLs = true
+            settings.allowUniversalAccessFromFileURLs = true
 
             // WebViewClient 用於處理頁面載入
             webViewClient = object : WebViewClient() {
@@ -89,16 +93,15 @@ class WebViewActivity : AppCompatActivity() {
             }
         }
 
-        // 載入預設網址
-        val defaultUrl = binding.urlEditText.text.toString()
-        if (defaultUrl.isNotBlank()) {
-            loadUrl(defaultUrl)
-        }
+        // 載入 Sudoku 遊戲（使用本地 assets - 離線可用）
+        val sudokuUrl = "file:///android_asset/sudoku/index.html"
+        binding.urlEditText.setText(sudokuUrl)
+        binding.webView.loadUrl(sudokuUrl)
     }
 
     private fun loadUrl(url: String) {
         var urlToLoad = url
-        if (!url.startsWith("http://") && !url.startsWith("https://")) {
+        if (!url.startsWith("http://") && !url.startsWith("https://") && !url.startsWith("file://")) {
             urlToLoad = "https://$url"
         }
         binding.webView.loadUrl(urlToLoad)
